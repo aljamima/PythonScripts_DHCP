@@ -1,0 +1,23 @@
+try mac in all upperCase mebbe?
+
+expire the leases soonerr mebbe?
+
+whats he saying here?:I have DHCP admin mode set to enable (using the GUI), bootp is disabled.  I set client ID and hardware address to the ethernet MAC address.
+
+try other versions of the firmware? v1.9.7.??
+
+miners using dnsmask? if so better be above V 2.78
+
+this is all dinos fault right?
+dedicated dhcp server?
+any settings after firmware flash i need to reinstall?
+If it's a linux shop, you should be using some sort of provisioning system, such as Cobbler, Foreman, or Razer.
+are these issues fixable? ok to give dino access?
+ok to limit customers access and or available hardware devices?
+should i set an access rpi on each customers vlan?
+one for us?
+recommend for writing scripts time? on the clock best right?
+should i negotiate for cto position?
+request paid study time?
+
+im gonna setup debian server with ONLY dhcp3 installed. import dinos dhcpd.leases file... see what happens?
