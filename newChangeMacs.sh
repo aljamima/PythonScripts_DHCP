@@ -47,7 +47,7 @@ if [ -f /etc/dhcp/dhcpdEDITING.conf ] ; then
     rm /etc/dhcp/dhcpdEDITING.conf
     touch /etc/dhcp/dhcpdEDITING.conf
 fi
-backupString="cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpdBACKUP.conf"
+backupString="cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpdEDITING.conf"
 TODAY=`date +%Y-%m-%d.%H:%M:%S`
 if [ "$backupString" ]; then
     echo "Successfully Backed Up DHCP Table"
