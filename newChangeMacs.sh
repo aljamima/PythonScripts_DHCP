@@ -18,7 +18,7 @@ function hostEntry () {
 }
 function removeOldIp {
 	IP=$1
-	sed -i "/${IP}$/d" ~/dhcpd.conf
+	sed -i "/${IP}$/d" /etc/dhcp/dhcpd.conf
 	echo "$IP Was Removed"
 	#sed -i "/*{IP}/d"
 	#sed -i ".bak" '/{.*$1.*}/d' /etc/dhcp/dhcpdEDITING.conf
@@ -45,11 +45,12 @@ fi
 }
 if [ -f /etc/dhcp/dhcpdEDITING.conf ] ; then
     rm /etc/dhcp/dhcpdEDITING.conf
+    touch /etc/dhcp/dhcpdEDITING.conf
 fi
-backupString="cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcp$TODAY.conf"
+backupString="cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpdBACKUP.conf"
 TODAY=`date +%Y-%m-%d.%H:%M:%S`
 if [ "$backupString" ]; then
-	echo "Successfully Backed Up DHCP Table"
+    echo "Successfully Backed Up DHCP Table"
 fi
 #
 #grep -E "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)"
@@ -94,7 +95,6 @@ NEWMACLC=${NEWMAC^^}
 if [ `echo $NEWMACLC | egrep "^([0-9A-F]{2}:){5}[0-9A-F]{2}$"` ]
 then
     echo "Valid Mac"
-	break
 else
     echo "Invalid Mac. Exiting"
     exit 1
@@ -112,7 +112,7 @@ case $yn in
 	#remove old static entry
 	#removeOldIp $OLDIP
 	## generate dhcp list:
-	hostEntry $NEWHOST $NEWMACLC $OLDIP >> home/chawn/dhcpd.conf
+	hostEntry $NEWHOST $NEWMACLC $OLDIP >> /etc/dhcp/dhcpdEDITING.conf
 	if dhcpd -t -cf /etc/dhcp/dhcpdEDITING.conf ; then
 		sleep 3
 		cp /etc/dhcp/dhcpdEDITING.conf /etc/dhcp/dhcpd.conf
