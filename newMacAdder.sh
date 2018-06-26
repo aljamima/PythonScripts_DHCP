@@ -30,9 +30,9 @@ echo "OK, What IS The IP?"
 echo "Please Enter It In Correct Format ex: 10.1.2.3"
 read delIp
 OLDIP=$delIp
-if removeOldIp $delIp ; then 
-	echo "Successfully Removed $delIp"
-fi
+#if removeOldIp $delIp ; then 
+#	echo "Successfully Removed $delIp"
+#fi
 echo "Please Enter A Hostname For Your New Static Map:"
 read NEWHOST
 echo ""
