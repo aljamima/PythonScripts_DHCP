@@ -19,7 +19,7 @@ function removeOldIp {
 	NEWMACLC=${NEWMAC^^}
 	#removerVar="sed -i "/${IP}/d" /etc/dhcp/dhcpd.conf"
 	#removerVar=$(sed -i "/s{.*$MAC.*} /{.*$NEWMAC.*}/" /etc/dhcp/dhcpd.conf)
-	removerVar=$(sed -i "s/${OLDMACLC}/${NEWMACLC}/g" /etc/dhcp/dhcpd.conf)
+	removerVar=$(sed -i "s/${OLDMACLC}/${NEWMACLC}/g" /etc/dhcp/dhcpdEDITING.conf)
 	#removerVar="sed -i "/*{IP}/d" /etc/dhcp/dhcpd.conf"
 	#removerVar="sed -i "/{.*$IP.*}/d" /etc/dhcp/dhcpdEDITING.conf"
 	#removerVar="sed -i '/{.*$IP.*}/d' /etc/dhcp/dhcpd.conf"
@@ -38,10 +38,21 @@ function removeOldIp {
 	fi
 }
 rootCheck
+parameterCheck
+
+TODAY=`date +%Y-%m-%d.%H:%M:%S`
+backupString="cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpd$TODAY.conf"
+if [ "$backupString" ]; then
+    echo "Successfully Backed Up DHCP Table"
+else
+	exit 1 && echo "Couldn't Make Backups. EXITING"
+fi
+cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpdEDITING.conf
+#
 removeOldIp $1 $2
-if dhcpd -t -cf /etc/dhcp/dhcpd.conf ; then
+if dhcpd -t -cf /etc/dhcp/dhcpdEDITING.conf ; then
 	sleep 3
-	#cp /etc/dhcp/dhcpdEDITING.conf /etc/dhcp/dhcpd.conf
+	cp /etc/dhcp/dhcpdEDITING.conf /etc/dhcp/dhcpd.conf
 	sudo systemctl restart isc-dhcp-server
 	systemctl status isc-dhcp-server
 else
