@@ -55,13 +55,11 @@ else
 fi
 }
 function validateIps () {
-validIP=$1
-#if [[ $validIp =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-#if $(echo $validIp | awk -F"\." '$0 ~ /^([0-9]{1,3}\.){3}[0-9]{1,3}$/ && $1 <=255 && $2 <= 255 && $3 <= 255 && $4 <= 255'); then
+validIp=$1
 if $(echo $validIp | awk -F'[\\.]' '$0 ~ /^([0-9]{1,3}\.){3}[0-9]{1,3}$/ && $1 <=255 && $2 <= 255 && $3 <= 255 && $4 <= 255'); then
-  echo $validIp
+    echo $validIp
 else
- exit 1 && echo "bad ip homie"
+    exit 1 && echo "bad ip homie"
 fi
 }
 if [ -f /etc/dhcp/dhcpdEDITING.conf ] ; then
@@ -69,8 +67,7 @@ if [ -f /etc/dhcp/dhcpdEDITING.conf ] ; then
     cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpdEDITING.conf
 fi
 
-TODAY=`date +%Y-%m-%d.%H:%M:%S`
-backupString="cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpd$TODAY.conf"
+backupString="cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpd$DATE.conf"
 
 if [ "$backupString" ]; then
     echo "Successfully Backed Up DHCP Table as dhcpd$TODAY.conf"
