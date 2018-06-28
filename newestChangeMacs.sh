@@ -32,19 +32,13 @@ function hostEntry () {
 }
 function removeOldIp {
 	IP="$1\;"
-	#sed -i "/${IP}$/d" /etc/dhcp/dhcpd.conf
 	sed -i "/{.*$IP.*}/d" /etc/dhcp/dhcpdEDITING.conf
 	echo "$IP IP Was Removed"
-	#sed -i "/*{IP}/d"
-	#sed -i ".bak" '/{.*$1.*}/d' /etc/dhcp/dhcpdEDITING.conf
 }
 function removeOldMac {
-	MAC="$1\;"
-	#sed -i "/${MAC}$/d" /etc/dhcp/dhcpd.conf
+	MAC="$1"
 	sed -i "/{.*$MAC.*}/d" /etc/dhcp/dhcpdEDITING.conf
 	echo "$MAC Mac Was Removed"
-	#sed -i "/*{MAC}/d"
-	#sed -i ".bak" '/{.*$1.*}/d' /etc/dhcp/dhcpdEDITING.conf
 }
 function validateMacs () {
 validMac=$1
@@ -59,11 +53,11 @@ ip=$1
 if expr "$ip" : '[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*$' >/dev/null; then
   for i in 1 2 3 4; do
     if [ $(echo "$ip" | cut -d. -f$i) -gt 255 ]; then
-      echo "fail ($ip)"
+      echo "fail"
       exit 1
     fi
   done
-  echo "success"
+  echo "$ip"
 else
   echo "fail ($ip)"
   exit 1
