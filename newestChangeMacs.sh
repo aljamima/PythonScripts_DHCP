@@ -5,7 +5,7 @@
 #
 #  Mitht need to get ris of delete entry function and make it a sepeates script
 #
-
+TODAY=`date +%Y-%m-%d.%H:%M:%S`
 exec   > >(tee -ia /var/log/dhcpd.log)        ### work on logging still...
 exec  2> >(tee -ia /var/log/dhcpd.log >& 2)  ### I think this one is giving stderr back to stdout and i dont want that. 
 exec 19> /var/log/dhcpd.log
