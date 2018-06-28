@@ -63,8 +63,7 @@ if expr "$ip" : '[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*$' >/dev/null
       exit 1
     fi
   done
-  echo "success ($ip)"
-  exit 0
+  echo "success"
 else
   echo "fail ($ip)"
   exit 1
