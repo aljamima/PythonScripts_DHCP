@@ -82,10 +82,10 @@ fi
 rootCheck
 echo "WELCOME TO THE DHCP CHANGE-A-NATOR"
 echo ""
-echo "OK, What IS The IP To Delete? Leave Empty If Only Deleting Mac"
+echo "OK, What IS The IP You Want To Assign?"
 echo "Please Enter It In Correct Format ex: 10.1.2.3"
 read delIp
-echo "Enter The Mac Address To DELETE Exactly As It Is.  Leave Empty If Only Deleting IP  "
+echo "Enter The Mac Address To Assign, Exactly As It Is:"
 echo "ex. AA:BB:CC:DD:EE:00"
 read NEWMAC
 if $(validateIps $delIp); then
@@ -93,10 +93,10 @@ if $(validateIps $delIp); then
 	if $(validateMacs $NEWMAC); then
 		removeOldMac $NEWMAC
 	else
-		echo "Mac May Not Have Been Deleted"
+		exit 1 && echo "Mac May Not Have Been Deleted"
 	fi
 else
-	echo "Mebbe IP Not Deleted?"
+	exit 1 && echo "Mebbe IP Not Deleted?"
 fi
 echo "Please Enter A Hostname For Your New Static Map:"
 read NEWHOST
