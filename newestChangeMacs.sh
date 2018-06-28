@@ -66,57 +66,26 @@ fi
 rootCheck
 echo "WELCOME TO THE DHCP CHANGE-A-NATOR"
 echo ""
-echo "Do You Have Any IPs To Delete From Table?"
-echo ""
-read -p "Y or N?" yesRno
-case $yesRno in
-	[Yy]* )
-		echo "OK, What IS The IP To Delete? Leave Empty If Only Deleting Mac"
-		echo "Please Enter It In Correct Format ex: 10.1.2.3"
-		read delIp
-		echo "Enter The Mac Address To DELETE Exactly As It Is.  Leave Empty If Only Deleting IP  "
-		echo "ex. AA:BB:CC:DD:EE:00"
-		read DELMAC
-		if $(validateIps $delIp); then
-			removeOldIp $delIp
-			if $(validateMacs $DELMAC); then
-				removeOldMac $DELMAC
-			else
-				echo "Mac May Not Have Been Deleted"
-			fi
-		else
-			echo "Mebbe IP Not Deleted?"
-		fi
-	;;
-	[Nn]* )
-		echo "OK, Fair Enough. We Will Continue To Adding A New Mac And Ip To The Table"
-		echo ""
-	;;
-	* ) 
-		echo "Wrong Answer, Im Skiping Ahead To Adding New Macs"
-		echo ""
-	;;	
-esac
+echo "OK, What IS The IP To Delete? Leave Empty If Only Deleting Mac"
+echo "Please Enter It In Correct Format ex: 10.1.2.3"
+read delIp
+echo "Enter The Mac Address To DELETE Exactly As It Is.  Leave Empty If Only Deleting IP  "
+echo "ex. AA:BB:CC:DD:EE:00"
+read NEWMAC
+if $(validateIps $delIp); then
+	removeOldIp $delIp
+	if $(validateMacs $NEWMAC); then
+		removeOldMac $NEWMAC
+	else
+		echo "Mac May Not Have Been Deleted"
+	fi
+else
+	echo "Mebbe IP Not Deleted?"
+fi
 echo "Please Enter A Hostname For Your New Static Map:"
 read NEWHOST
 echo ""
-echo "Enter The New Mac Address Exactly As It Is:  "
-echo "ex. AA:BB:CC:DD:EE:00"
-read NEWMAC
-## validate MAC:
-# capitalize it for faster regexp match
-#should make it a mac validaor function
-#
 NEWMACLC=${NEWMAC^^}
-if [ `echo $NEWMACLC | egrep "^([0-9A-F]{2}:){5}[0-9A-F]{2}$"` ]
-then
-    echo "Valid Mac"
-else
-    echo "Invalid Mac. Exiting"
-    exit 1
-fi
-echo "What Is The Ip Of This New Miner?"
-read OLDIP
 echo "OK, We Are Going To Create An Entry For The Following Miner(s)"
 echo
 echo $NEWHOST $NEWMACLC $OLDIP
