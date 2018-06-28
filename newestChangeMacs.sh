@@ -5,6 +5,22 @@
 #
 #  Mitht need to get ris of delete entry function and make it a sepeates script
 #
+
+exec   > >(tee -ia /var/log/dhcpd.log)        ### work on logging still...
+exec  2> >(tee -ia /var/log/dhcpd.log >& 2)  ### I think this one is giving stderr back to stdout and i dont want that. 
+exec 19> /var/log/dhcpd.log
+export BASH_XTRACEFD="19"
+set -x
+DATE='date +%Y/%m/%d:%H:%M:%S'
+LOG='/var/log/dhcpd.log'
+echo_log "Script running"
+function echo_log {
+    echo `$DATE`" $1" >> $LOG
+}
+# start
+echo_log "Script running"
+
+
 function rootCheck () {
 if [[ $EUID -ne 0 ]]; then
    echo "This script must be run as root"
@@ -115,7 +131,9 @@ case $yn in
 	* ) 
 		echo "Please answer yes or no."; exit;;
 esac
-
-
+# Close the output stream not sure if needed but why not?   ¯\_(ツ)_/¯
+set +x
+exec 19>&-		
+exit
 
 
