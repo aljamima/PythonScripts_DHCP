@@ -42,7 +42,7 @@ function removeOldMac {
 }
 function validateMacs () {
 validMac=$1
-if [ `echo $validMac | egrep "^([0-9A-F]{2}:){5}[0-9A-F]{2}$"` ]; then
+if [ $(echo $validMac | egrep "^([0-9A-F]{2}:){5}[0-9A-F]{2}$") ]; then
     echo $validMac
 else
 	exit 1 && echo "bad mac homie"
@@ -95,10 +95,11 @@ read delIp
 echo "Enter The Mac Address To Assign, Exactly As It Is:"
 echo "ex. AA:BB:CC:DD:EE:00"
 read NEWMAC
+NEWMACLC=${NEWMAC^^}
 if [ $(validIp $delIp) ]; then
 	removeOldIp $delIp
-	if [ $(validateMacs $NEWMAC) ]; then
-		removeOldMac $NEWMAC
+	if [ $(validateMacs $NEWMACLC) ]; then
+		removeOldMac $NEWMACLC
 	else
 		exit 1 && echo "Mac May Not Have Been Deleted"
 	fi
@@ -108,7 +109,6 @@ fi
 echo "Please Enter A Hostname For Your New Static Map:"
 read NEWHOST
 echo ""
-NEWMACLC=${NEWMAC^^}
 echo "OK, We Are Going To Create An Entry For The Following Miner(s)"
 echo
 echo $NEWHOST $NEWMACLC $OLDIP
