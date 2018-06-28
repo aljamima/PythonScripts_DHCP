@@ -111,7 +111,7 @@ read NEWHOST
 echo ""
 echo "OK, We Are Going To Create An Entry For The Following Miner(s)"
 echo
-echo $NEWHOST $NEWMACLC $OLDIP
+echo $NEWHOST $NEWMACLC $delIP
 echo
 echo "Is This Correct? Your About To Edit The Running DHCP Server, PLEASE DOUBLE-CHECK!" 
 read -p "Y or N?" yn
@@ -120,7 +120,7 @@ case $yn in
 	#remove old static entry
 	#removeOldIp $OLDIP
 	## generate dhcp list:
-	hostEntry $NEWHOST $NEWMACLC $OLDIP >> /etc/dhcp/dhcpdEDITING.conf
+	hostEntry $NEWHOST $NEWMACLC $delIP >> /etc/dhcp/dhcpdEDITING.conf
 	if dhcpd -t -cf /etc/dhcp/dhcpdEDITING.conf ; then
 		sleep 3
 		cp /etc/dhcp/dhcpdEDITING.conf /etc/dhcp/dhcpd.conf
