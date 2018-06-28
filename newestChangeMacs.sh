@@ -56,7 +56,7 @@ fi
 }
 function validateIps () {
 validIp=$1
-if $(echo $validIp | awk -F'[\\.]' '$0 ~ /^([0-9]{1,3}\.){3}[0-9]{1,3}$/ && $1 <=255 && $2 <= 255 && $3 <= 255 && $4 <= 255'); then
+if [ $(echo $validIp | awk -F'[\\.]' '$0 ~ /^([0-9]{1,3}\.){3}[0-9]{1,3}$/ && $1 <=255 && $2 <= 255 && $3 <= 255 && $4 <= 255') ]; then
     echo $validIp
 else
     exit 1 && echo "bad ip homie"
