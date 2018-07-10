@@ -95,10 +95,12 @@ read delIp
 echo "Enter The Mac Address To Assign, Exactly As It Is:"
 echo "ex. AA:BB:CC:DD:EE:00"
 read NEWMAC
+NEWMAC=${NEWMAC,,}
 NEWMACLC=${NEWMAC^^}
 if [ $(validIp $delIp) ]; then
 	removeOldIp $delIp
 	if [ $(validateMacs $NEWMACLC) ]; then
+		removeOldMac $NEWMAC
 		removeOldMac $NEWMACLC
 	else
 		exit 1 && echo "Mac May Not Have Been Deleted"
