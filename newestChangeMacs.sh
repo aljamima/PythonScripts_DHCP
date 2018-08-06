@@ -1,4 +1,5 @@
 #!/bin/bash
+rootCheck
 #  Take IP adderss as input and remove that miner from the current mac table. Input new hostname and mac and then add that to current mac table then scp it and restart the dhcp server
 #   CONF file takes following format:
 #     host wrt45gl-etika  { hardware ethernet 00:21:29:a1:c3:a1; fixed-address 10.219.43.135; } # MSIE routeris WRT54GL
@@ -72,10 +73,9 @@ else
     exit 1 && echo "bad ip homie"
 fi
 }
-if [ -f /etc/dhcp/dhcpdEDITING.conf ] ; then
-    rm /etc/dhcp/dhcpdEDITING.conf
-    cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpdEDITING.conf
-fi
+
+rm - rf /etc/dhcp/dhcpdEDITING.conf 2>/dev/null
+cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpdEDITING.conf
 
 backupString="cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpd$DATE.conf"
 
@@ -86,7 +86,6 @@ fi
 #
 #grep -E "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)"
 
-rootCheck
 echo "WELCOME TO THE DHCP CHANGE-A-NATOR"
 echo ""
 echo "OK, What IS The IP You Want To Assign?"
@@ -131,7 +130,7 @@ case $yn in
 	else
 		echo "THERE WERE ERRORS IN YOUR CONFIG, EXITING."
 		#cp /etc/dhcp/dhcpdCOPY.conf /etc/dhcp/dhcpd.conf
-		exit
+		exit 2
 	fi
 	;;
 	[Nn]* )
