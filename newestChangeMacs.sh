@@ -27,11 +27,12 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 }
+rootCheck
 function hostEntry () {
 	echo -e "host $1 { fixed-address $3;     hardware ethernet $2; } ## $TODAY"
 }
 function removeOldIp {
-	IP="$1\;"
+	IP="$1;"
 	sed -i "/{.*$IP.*}/d" /etc/dhcp/dhcpdEDITING.conf
 	echo "$IP IP Was Removed"
 }
@@ -99,10 +100,10 @@ if [ $(validIp $delIp) ]; then
 		removeOldMac $NEWMAC
 		removeOldMac $NEWMACLC
 	else
-		exit 1 && echo "Mac May Not Have Been Deleted"
+		echo "Mac Was NOT Deleted, there was an error!" && exit 1
 	fi
 else
-	exit 1 && echo "Mebbe IP Not Deleted?"
+	echo "Ip may not have been deleted, there was an error" && exit 1
 fi
 echo "Please Enter A Hostname For Your New Static Map:"
 read NEWHOST
@@ -138,6 +139,6 @@ case $yn in
 esac
 # Close the output stream not sure if needed but why not?   ¯\_(ツ)_/¯
 set +x
-exec 19>&-		
+exec 19>&-
 exit
 
