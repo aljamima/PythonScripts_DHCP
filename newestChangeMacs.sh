@@ -1,5 +1,4 @@
 #!/bin/bash
-rootCheck
 #  Take IP adderss as input and remove that miner from the current mac table. Input new hostname and mac and then add that to current mac table then scp it and restart the dhcp server
 #   CONF file takes following format:
 #     host wrt45gl-etika  { hardware ethernet 00:21:29:a1:c3:a1; fixed-address 10.219.43.135; } # MSIE routeris WRT54GL
@@ -83,9 +82,7 @@ if [ "$backupString" ]; then
     echo "Successfully Backed Up DHCP Table as dhcpd$TODAY.conf"
 fi
 
-#
-#grep -E "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)"
-
+rootCheck
 echo "WELCOME TO THE DHCP CHANGE-A-NATOR"
 echo ""
 echo "OK, What IS The IP You Want To Assign?"
@@ -115,7 +112,7 @@ echo
 echo $NEWHOST $NEWMACLC $delIp
 echo
 echo "Is This Correct? Your About To Edit The Running DHCP Server, PLEASE DOUBLE-CHECK!" 
-read -p "Y or N?" yn
+read -n 1 -p "Y or N?" yn
 case $yn in
 	[Yy]* )
 	#remove old static entry
@@ -143,5 +140,4 @@ esac
 set +x
 exec 19>&-		
 exit
-
 
