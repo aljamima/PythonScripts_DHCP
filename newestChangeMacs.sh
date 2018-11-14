@@ -124,7 +124,12 @@ case $yn in
 		sleep 3
 		cp /etc/dhcp/dhcpdEDITING.conf /etc/dhcp/dhcpd.conf
 		sudo systemctl restart isc-dhcp-server
-		systemctl status isc-dhcp-server
+		#systemctl status isc-dhcp-server
+		if systemctl is-active isc-dhcp-server; then 
+			echo -e "\e[30;48;5;82m Changes Are Complete And Server Is Back UP\e[49m" 
+		else 
+			echo -e "\e[41;38;5;82m  THERES A PROBLEM! PLEASE CONTACT YOUR NETWORK TEAM! \e[49m"
+		fi
 	else
 		echo "THERE WERE ERRORS IN YOUR CONFIG, EXITING."
 		#cp /etc/dhcp/dhcpdCOPY.conf /etc/dhcp/dhcpd.conf
